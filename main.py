@@ -1,3 +1,6 @@
+from game import SiberMatrix
+import arcade
 
 if __name__ == "__main__":
-    pass
+    window = SiberMatrix()
+    arcade.run()
