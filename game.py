@@ -3,6 +3,7 @@ from consts import SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_TITLE, PLAYER_SPEED, PLAY
 from drawing_functions import draw_menu
 from PIL import Image
 import os 
+from update import update_bg
 
 def load_gif_frames(gif_path):
     """Pillow kullanarak GIF'teki frameleri Arcade Texture listesine çevirir."""
@@ -45,8 +46,12 @@ class SiberMatrix(arcade.Window):
         self.exit_button_y = self.play_button_y - self.button_height - button_spacing - 10
 
         
+        
     def on_draw(self):
         if self.show_menu:
             draw_menu(self)
+    
+    def on_update(self, time):
+        update_bg(self, time)
         
 
