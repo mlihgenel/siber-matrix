@@ -19,6 +19,10 @@ def load_gif_frames(gif_path):
         pass
     return frames
 
+font_path = os.path.join(os.path.dirname(__file__), 'assets', 'VT323-Regular.ttf')
+
+arcade.load_font(font_path) 
+
 class SiberMatrix(arcade.Window):
     
     def __init__(self):
