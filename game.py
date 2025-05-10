@@ -49,13 +49,29 @@ class SiberMatrix(arcade.Window):
         self.exit_button_x = SCREEN_WIDTH//2
         self.exit_button_y = self.play_button_y - self.button_height - button_spacing - 10
 
+        music_path = os.path.join(os.path.dirname(__file__), "assets", "clubbed_to_death.wav")
+        self.background_music = arcade.load_sound(music_path)
+        self.music_player = None
+        self.play_background_music()
+        self.show_level_message = False
+        self.level_transition_pause = False
+        self.level_message_timer = 0
+        self.level_message_duration = 2.0 
+    
+    def play_background_music(self):
+        """Arkaplan müziğinin sesini kontrol eder"""
+        if self.music_player is None:
+            self.music_player = self.background_music.play(loop=True)
         
-        
+
+
     def on_draw(self):
         if self.show_menu:
             draw_menu(self)
     
     def on_update(self, time):
         update_bg(self, time)
+        
+        
         
 
