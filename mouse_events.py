@@ -11,4 +11,4 @@ def handle_mouse_press(self, x, y, button, modifiers):
         if abs(x - self.exit_button_x) < self.button_width/2 and abs(y - self.exit_button_y) < self.button_height/2:
             self.close()
             return
-        
+    super(self.__class__, self).on_mouse_press(x, y, button, modifiers)    
