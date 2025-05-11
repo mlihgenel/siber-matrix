@@ -7,7 +7,7 @@ OBSTACLE_SPEED = 5
 
 PLAYER_SPRITES_LEFT = [
     "assets/heroes/hero_left_down.png",
-    "assets/ heroes/hero_left_up.png"
+    "assets/heroes/hero_left_up.png"
 ]
 PLAYER_SPRITES_RIGHT = [
     "assets/heroes/hero_right_down.png",
