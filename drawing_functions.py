@@ -29,4 +29,32 @@ def draw_menu(self):
         
             arcade.draw_text(text, bx, by, arcade.color.WHITE, 35, anchor_x='center', anchor_y='center', font_name='VT323', bold=True)
         
+def draw_game(self):
+    #self.obstacle_list.draw()
+    self.player_list.draw()
+    
+    arcade.draw_text(f"Skor: {self.score}", 40, SCREEN_HEIGHT - 50, (0,255,70), 32, font_name="VT323")
+    arcade.draw_text(f"Level: {self.level}", 40, SCREEN_HEIGHT - 90, (0,255,70), 28, font_name="VT323")
+    
+    visual_speed = self.get_visual_speed(self.level)
+    arcade.draw_text(f"Speed: {visual_speed:.1f}x", SCREEN_WIDTH - 200, SCREEN_HEIGHT - 100, (0,255,70), 28, font_name="VT323")
+    
+    arcade.draw_text(f"En Yüksek: {self.best_score}", 
+                    SCREEN_WIDTH - 200, 
+                    SCREEN_HEIGHT - 50, 
+                    (0,255,70), 
+                    28,
+                    font_name="VT323")
+    
+    if self.show_level_message:
+        draw_glass_box(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 400, 100)
+        arcade.draw_text(f"LEVEL {self.level}!", 
+                        SCREEN_WIDTH//2,
+                        SCREEN_HEIGHT//2,
+                        (0,255,70),
+                        40,
+                        anchor_x="center",
+                        anchor_y="center",
+                        font_name="VT323",
+                        bold=True)
         
