@@ -5,6 +5,7 @@ from PIL import Image
 import os
 from update import update_game, handle_key_press, handle_key_release
 from mouse_events import handle_mouse_press
+from obstacle_manager import create_obstacles
 
 def load_gif_frames(gif_path):
     """Pillow kullanarak GIF'teki frameleri Arcade Texture listesine çevirir."""
@@ -74,6 +75,9 @@ class SiberMatrix(arcade.Window):
         self.animation_counter = 0
         self.facing_right = True
         self.facing_left = True
+
+        self.obstacle_list = None
+        self.obstacle_speed = OBSTACLE_SPEED
         
     def play_background_music(self):
         """Arkaplan müziğinin sesini kontrol eder."""
@@ -114,6 +118,11 @@ class SiberMatrix(arcade.Window):
         self.facing_left = False
         self.game_over = False
 
+        self.create_obstacles()
+
+    def create_obstacles(self):
+        create_obstacles(self)
+
     def get_visual_speed(self, level):
         base_speed = 1.0
         increment = 0.5
@@ -129,6 +138,14 @@ class SiberMatrix(arcade.Window):
         
         if not self.game_over:
             draw_game(self)
+            
+    def calculate_next_level_score(self, current_level):
+        if current_level <= 3:
+            return current_level * 35
+        elif current_level <= 7:
+            return 105 + (current_level - 3) * 45
+        else:
+            return 285 + (current_level - 7) * 60
 
     def on_update(self, time):
         """Oyun mantığını günceller."""
