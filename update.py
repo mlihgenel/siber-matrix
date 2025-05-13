@@ -8,6 +8,19 @@ def update_game(self, delta_time):
             self.current_bg_frame_index = (self.current_bg_frame_index + 1) % len(self.menu_bg_frames)
             self.bg_frame_timer = 0
         return
+    if self.show_morpheus:
+        return
+    if self.countdown_active:
+        self.countdown_timer += delta_time
+        if self.countdown_timer >= self.countdown_duration:
+            self.countdown_number -= 1
+            self.countdown_timer = 0
+            if self.countdown_number <= 0:
+                self.countdown_active = False
+                self.countdown_number = 3
+                self.obstacle_list.clear()
+                self.create_obstacles()
+        return
 
     self.player_list.update()
 
@@ -87,7 +100,6 @@ def handle_key_press(self, key, modifiers):
             self.countdown_active = True
             for obstacle in arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
                 obstacle.remove_from_sprite_lists()
-            self.setup()
             return
         elif key == arcade.key.M:
             self.show_morpheus = False

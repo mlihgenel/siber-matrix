@@ -1,6 +1,6 @@
 import arcade
 from consts import SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_TITLE, PLAYER_SPEED, PLAYER_SPRITES_LEFT, PLAYER_SPRITES_RIGHT, ENGEL_SPRITES, OBSTACLE_SPEED
-from drawing_functions import draw_menu, draw_game , draw_morpheus
+from drawing_functions import draw_menu, draw_game , draw_morpheus , draw_countdown
 from PIL import Image
 import os
 from update import update_game, handle_key_press, handle_key_release
@@ -82,6 +82,11 @@ class SiberMatrix(arcade.Window):
         self.morpheus_shown = False
         self.show_morpheus = False
         self.morpheus_choice = None
+        self.countdown_active = False
+            
+        self.countdown_number = 3
+        self.countdown_timer = 0
+        self.countdown_duration = 1.0 
         
         self.blue_pill_button = arcade.Sprite("assets/heroes/blue_pill.png", scale=0.75)
         self.red_pill_button = arcade.Sprite("assets/heroes/red_pill.png", scale=0.75)
@@ -153,12 +158,16 @@ class SiberMatrix(arcade.Window):
             draw_menu(self)
             return 
         
+        if self.countdown_active:
+            draw_countdown(self)
+            return
+
         if not self.game_over:
             draw_game(self)
             
         if self.show_morpheus:
             draw_morpheus(self)
-        return
+            return
             
     def calculate_next_level_score(self, current_level):
         if current_level <= 3:
@@ -181,4 +190,6 @@ class SiberMatrix(arcade.Window):
     
     def on_key_release(self, key, modifiers):
         handle_key_release(self, key, modifiers)
+        
+    
 
