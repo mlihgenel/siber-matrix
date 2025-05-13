@@ -1,6 +1,6 @@
 import arcade
 from consts import SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_TITLE, PLAYER_SPEED, PLAYER_SPRITES_LEFT, PLAYER_SPRITES_RIGHT, ENGEL_SPRITES, OBSTACLE_SPEED
-from drawing_functions import draw_menu, draw_game
+from drawing_functions import draw_menu, draw_game , draw_morpheus
 from PIL import Image
 import os
 from update import update_game, handle_key_press, handle_key_release
@@ -79,6 +79,19 @@ class SiberMatrix(arcade.Window):
         self.obstacle_list = None
         self.obstacle_speed = OBSTACLE_SPEED
         
+        self.morpheus_shown = False
+        self.show_morpheus = False
+        self.morpheus_choice = None
+        
+        self.blue_pill_button = arcade.Sprite("assets/heroes/blue_pill.png", scale=0.75)
+        self.red_pill_button = arcade.Sprite("assets/heroes/red_pill.png", scale=0.75)
+        self.red_pill_button.center_x = SCREEN_WIDTH//2 - 165 
+        self.red_pill_button.center_y = SCREEN_HEIGHT//2 + 50 
+        self.blue_pill_button.center_x = SCREEN_WIDTH//2 + 155 
+        self.blue_pill_button.center_y = SCREEN_HEIGHT//2 + 50 
+        self.pill_button_width = 170
+        self.pill_button_height = 170
+        
     def play_background_music(self):
         """Arkaplan müziğinin sesini kontrol eder."""
         if self.music_player is None:
@@ -117,6 +130,10 @@ class SiberMatrix(arcade.Window):
         self.facing_right = True
         self.facing_left = False
         self.game_over = False
+        
+        self.morpheus_shown = False
+        self.show_morpheus = False
+        self.morpheus_choice = None
 
         self.create_obstacles()
 
@@ -138,6 +155,10 @@ class SiberMatrix(arcade.Window):
         
         if not self.game_over:
             draw_game(self)
+            
+        if self.show_morpheus:
+            draw_morpheus(self)
+        return
             
     def calculate_next_level_score(self, current_level):
         if current_level <= 3:
