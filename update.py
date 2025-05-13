@@ -63,7 +63,11 @@ def update_game(self, delta_time):
             self.player_sprite.texture = self.player_textures_left[0]
 
     if arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
-        self.game_over = True
+        if not self.morpheus_shown:
+            self.show_morpheus = True
+            self.morpheus_shown = True
+        else:
+            self.game_over = True
 
 def handle_key_press(self, key, modifiers):
     if key == arcade.key.Q:
@@ -75,6 +79,21 @@ def handle_key_press(self, key, modifiers):
             self.show_menu = False
             self.setup()
         return
+    
+    if self.show_morpheus:
+        if key == arcade.key.R:
+            self.show_morpheus = False
+            self.morpheus_choice = 'red'
+            self.countdown_active = True
+            for obstacle in arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
+                obstacle.remove_from_sprite_lists()
+            self.setup()
+            return
+        elif key == arcade.key.M:
+            self.show_morpheus = False
+            self.morpheus_choice = 'blue'
+            self.show_menu = True
+            return
 
     if self.game_over:
         if key == arcade.key.SPACE:
