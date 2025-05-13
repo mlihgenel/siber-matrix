@@ -76,6 +76,9 @@ def draw_morpheus(self):
                     anchor_y="center", 
                     font_name="VT323",
                     bold=True)
+    
+    self.blue_pill_button.draw()
+    self.red_pill_button.draw()
 
 def draw_countdown(self):
     arcade.draw_text("İkinci Bir Şans", 
@@ -97,6 +100,14 @@ def draw_countdown(self):
                     anchor_y="center",
                     font_name="VT323",
                     bold=True)
+    
+def draw_paused(self):
+    self.obstacle_list.draw()
+    self.player_list.draw()
+    draw_neon_box(self.pause_continue_button_x, self.pause_continue_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
+    arcade.draw_text("Devam Et", self.pause_continue_button_x, self.pause_continue_button_y, arcade.color.WHITE, 36, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+    draw_neon_box(self.pause_menu_button_x, self.pause_menu_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
+    arcade.draw_text("Ana Menüye Dön", self.pause_menu_button_x, self.pause_menu_button_y, arcade.color.WHITE, 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
 
-    self.blue_pill_button.draw()
-    self.red_pill_button.draw()
+
+
