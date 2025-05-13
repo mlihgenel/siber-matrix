@@ -8,8 +8,9 @@ def update_game(self, delta_time):
             self.current_bg_frame_index = (self.current_bg_frame_index + 1) % len(self.menu_bg_frames)
             self.bg_frame_timer = 0
         return
-    if self.show_morpheus:
+    if self.show_morpheus or self.paused:
         return
+
     if self.countdown_active:
         self.countdown_timer += delta_time
         if self.countdown_timer >= self.countdown_duration:

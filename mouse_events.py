@@ -22,8 +22,20 @@ def handle_mouse_press(self, x, y, button, modifiers):
             self.morpheus_choice = 'blue'
             self.show_menu = True
             return
+    if self.paused:
+        if (abs(x - self.pause_continue_button_x) < self.pause_menu_button_width/2 and
+            abs(y - self.pause_continue_button_y) < self.pause_menu_button_height/2):
+            self.paused = False
+            return
+        if (abs(x - self.pause_menu_button_x) < self.pause_menu_button_width/2 and
+            abs(y - self.pause_menu_button_y) < self.pause_menu_button_height/2):
+            self.paused = False
+            self.show_menu = True
+            self.setup()
+            return
         
     if abs(x - self.exit_button_x) < self.button_width/2 and abs(y - self.exit_button_y) < self.button_height/2:
         self.close()
         return   
+    
     super(self.__class__, self).on_mouse_press(x, y, button, modifiers)  
