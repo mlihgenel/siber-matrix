@@ -77,5 +77,26 @@ def draw_morpheus(self):
                     font_name="VT323",
                     bold=True)
 
+def draw_countdown(self):
+    arcade.draw_text("İkinci Bir Şans", 
+                           SCREEN_WIDTH//2,
+                           SCREEN_HEIGHT//2 + 100,
+                           (0,255,70),
+                           40,
+                           anchor_x="center",
+                           anchor_y="center",
+                           font_name="VT323",
+                           bold=True)
+            
+    arcade.draw_text(f"{self.countdown_number}", 
+                    SCREEN_WIDTH//2,
+                    SCREEN_HEIGHT//2,
+                    (0,255,70),
+                    100,
+                    anchor_x="center",
+                    anchor_y="center",
+                    font_name="VT323",
+                    bold=True)
+
     self.blue_pill_button.draw()
     self.red_pill_button.draw()
