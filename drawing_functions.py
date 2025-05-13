@@ -58,3 +58,24 @@ def draw_game(self):
                         font_name="VT323",
                         bold=True)
         
+def draw_morpheus(self):
+    box_x, box_y = SCREEN_WIDTH//2, SCREEN_HEIGHT//2
+    matrix_bg = arcade.load_texture("assets/matrix-bg.jpg")
+    arcade.draw_texture_rectangle(box_x, box_y, SCREEN_WIDTH, SCREEN_HEIGHT, matrix_bg)
+    morpheus_width = int(SCREEN_WIDTH * 0.6)
+    morpheus_height = int(morpheus_width * 1)
+    morpheus_texture = arcade.load_texture("assets/heroes/morpheus.png")
+    arcade.draw_texture_rectangle(box_x, box_y+100, morpheus_width, morpheus_height, morpheus_texture)
+
+    arcade.draw_text("CHOOSE ONE", 
+                    box_x, 
+                    box_y + 370, 
+                    (0,255,70), 
+                    61, 
+                    anchor_x="center", 
+                    anchor_y="center", 
+                    font_name="VT323",
+                    bold=True)
+
+    self.blue_pill_button.draw()
+    self.red_pill_button.draw()
