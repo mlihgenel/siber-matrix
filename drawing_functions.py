@@ -167,3 +167,27 @@ def draw_how_to_play(self):
         bold=True
     )
 
+def draw_game_over(self):
+    current_bg_texture = self.menu_bg_frames[self.current_bg_frame_index]
+    arcade.draw_texture_rectangle(
+        SCREEN_WIDTH//2,
+        SCREEN_HEIGHT//2,
+        SCREEN_WIDTH,
+        SCREEN_HEIGHT,
+        current_bg_texture
+    )
+
+    box_y = SCREEN_HEIGHT/2 + 200
+    arcade.draw_text("OYUN BİTTİ!", SCREEN_WIDTH/2, box_y,
+                    (0,255,70), 55, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+
+    score_box_y = SCREEN_HEIGHT/2 + 80
+    draw_glass_box(SCREEN_WIDTH/2, score_box_y, 400, 80)
+    arcade.draw_text(f"En Yüksek Skor: {self.best_score}", SCREEN_WIDTH/2, score_box_y + 15,
+                    (0,255,70), 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+    arcade.draw_text(f"Son Skor: {self.last_score}", SCREEN_WIDTH/2, score_box_y - 15,
+                    (0,255,70), 24, anchor_x="center", anchor_y="center", font_name="VT323")
+
+    button_y = SCREEN_HEIGHT/2 - 100
+    arcade.draw_text("Ana Menüye dönmek için SPACE tuşuna basın", SCREEN_WIDTH/2, button_y,
+                    (255,255,255), 26, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
