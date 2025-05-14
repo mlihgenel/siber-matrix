@@ -126,22 +126,23 @@ def draw_how_to_play(self):
                     bold=True)
 
     instructions = [
-        "Sağ/Sol ok tuşları ile hareket et",
-        "Engellerden kaç",
-        "Her engelden kaçtığında puan kazan",
-        "Belirli puanlarda level atla",
-        "Engele çarptığında seçim yap:",
-        "- Kırmızı hap: Devam et",
-        "- Mavi hap: Ana menüye dön"
+        "Matrix'te hareket etmek için Sağ/Sol ok tuşlarını kullan",
+        "Engellerden kaç ve hayatta kal",
+        "Her engelden kaçtığında Matrix'te güçlenirsin",
+        "Yeterli güce ulaştığında yeni seviyeye yükselirsin",
+        "Eğer yakalanırsan, Morpheus seni 1 kez kurtarabilir",
+        "Morpheus'un seçimi ile karşılaştığında:",
+        "- Kırmızı hap: Gerçeği görmeye devam et",
+        "- Mavi hap: Matrixten çık"
     ]
     
     start_y = SCREEN_HEIGHT - 250
     for i, text in enumerate(instructions):
         arcade.draw_text(text,
                         SCREEN_WIDTH//2,
-                        start_y - i * 50,
+                        start_y - i * 45, 
                         (0,255,70),
-                        24,
+                        20, 
                         anchor_x="center",
                         anchor_y="center",
                         font_name="VT323")
@@ -160,7 +161,7 @@ def draw_how_to_play(self):
         SCREEN_WIDTH//2,
         150,
         arcade.color.WHITE,
-        24,
+        15,
         anchor_x="center",
         anchor_y="center",
         font_name="VT323",
@@ -190,4 +191,4 @@ def draw_game_over(self):
 
     button_y = SCREEN_HEIGHT/2 - 100
     arcade.draw_text("Ana Menüye dönmek için SPACE tuşuna basın", SCREEN_WIDTH/2, button_y,
-                    (255,255,255), 26, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+                    (255,255,255), 20, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
