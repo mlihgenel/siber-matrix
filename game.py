@@ -1,6 +1,6 @@
 import arcade
 from consts import SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_TITLE, PLAYER_SPEED, PLAYER_SPRITES_LEFT, PLAYER_SPRITES_RIGHT, ENGEL_SPRITES, OBSTACLE_SPEED
-from drawing_functions import draw_menu, draw_game , draw_morpheus , draw_countdown , draw_paused, draw_how_to_play
+from drawing_functions import draw_menu, draw_game , draw_morpheus , draw_countdown , draw_paused, draw_how_to_play, draw_game_over
 from PIL import Image
 import os
 from update import update_game, handle_key_press, handle_key_release
@@ -116,6 +116,8 @@ class SiberMatrix(arcade.Window):
         self.how_to_play_button.center_y = 100
         self.back_button_width = 200
         self.back_button_height = 50
+        
+        self.game_over = False
 
 
         
@@ -165,6 +167,7 @@ class SiberMatrix(arcade.Window):
         self.morpheus_shown = False
         self.show_morpheus = False
         self.morpheus_choice = None
+        self.game_over = False
 
         self.create_obstacles()
 
@@ -191,6 +194,8 @@ class SiberMatrix(arcade.Window):
 
         if not self.game_over:
             draw_game(self)
+        else:
+            draw_game_over(self)
         
         if self.paused:
             draw_paused(self)
@@ -199,6 +204,9 @@ class SiberMatrix(arcade.Window):
         if self.show_morpheus:
             draw_morpheus(self)
             return
+
+            
+       
         
 
             
