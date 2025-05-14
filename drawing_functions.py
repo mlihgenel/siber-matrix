@@ -28,6 +28,8 @@ def draw_menu(self):
             draw_neon_box(bx, by, self.button_width, self.button_height, border=4, color=(0,255,70), glow=50)
         
             arcade.draw_text(text, bx, by, arcade.color.WHITE, 35, anchor_x='center', anchor_y='center', font_name='VT323', bold=True)
+    
+    self.how_to_play_button.draw()
         
 def draw_game(self):
     self.obstacle_list.draw()
@@ -109,5 +111,58 @@ def draw_paused(self):
     draw_neon_box(self.pause_menu_button_x, self.pause_menu_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
     arcade.draw_text("Ana Menüye Dön", self.pause_menu_button_x, self.pause_menu_button_y, arcade.color.WHITE, 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
 
+def draw_how_to_play(self):
+    draw_glass_box(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 700, 700)
+            
+    arcade.draw_text("NASIL OYNANIR", 
+                    SCREEN_WIDTH//2,
+                    SCREEN_HEIGHT - 150,
+                    (0,255,70),
+                    40,
+                    anchor_x="center",
+                    anchor_y="center",
+                    font_name="VT323",
+                    bold=True)
 
+    instructions = [
+        "Sağ/Sol ok tuşları ile hareket et",
+        "Engellerden kaç",
+        "Her engelden kaçtığında puan kazan",
+        "Belirli puanlarda level atla",
+        "Engele çarptığında seçim yap:",
+        "- Kırmızı hap: Devam et",
+        "- Mavi hap: Ana menüye dön"
+    ]
+    
+    start_y = SCREEN_HEIGHT - 250
+    for i, text in enumerate(instructions):
+        arcade.draw_text(text,
+                        SCREEN_WIDTH//2,
+                        start_y - i * 50,
+                        (0,255,70),
+                        24,
+                        anchor_x="center",
+                        anchor_y="center",
+                        font_name="VT323")
+    draw_neon_box(
+    SCREEN_WIDTH//2,  
+    150,              
+    self.back_button_width,
+    self.back_button_height,
+    border=4,
+    color=(0,255,70),
+    glow=50
+    )
+    
+    arcade.draw_text(
+        "ANA MENÜYE DÖN",
+        SCREEN_WIDTH//2,
+        150,
+        arcade.color.WHITE,
+        24,
+        anchor_x="center",
+        anchor_y="center",
+        font_name="VT323",
+        bold=True
+    )
 
