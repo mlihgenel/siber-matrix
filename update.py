@@ -87,6 +87,8 @@ def handle_key_press(self, key, modifiers):
         if key == arcade.key.SPACE:
             self.show_menu = False
             self.setup()
+            self.obstacle_speed = OBSTACLE_SPEED 
+            self.player_speed = PLAYER_SPEED     
         return
     
     if self.show_morpheus:
