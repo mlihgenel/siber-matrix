@@ -84,6 +84,9 @@ def update_game(self, delta_time):
             self.show_morpheus = True
             self.morpheus_shown = True
         else:
+            self.last_score = self.score  
+            if self.score > self.best_score: 
+                self.best_score = self.score
             self.game_over = True
 
 def handle_key_press(self, key, modifiers):
