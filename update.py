@@ -1,5 +1,5 @@
 import arcade 
-from consts import OBSTACLE_SPEED, PLAYER_SPEED
+from consts import OBSTACLE_SPEED, PLAYER_SPEED, SCREEN_WIDTH
 
 def update_game(self, delta_time):
     if self.show_menu or self.game_over:
@@ -22,6 +22,14 @@ def update_game(self, delta_time):
                 self.obstacle_list.clear()
                 self.create_obstacles()
         return
+
+    if self.player_sprite.center_x < self.player_sprite.width/2:
+        self.player_sprite.center_x = self.player_sprite.width/2
+        self.player_sprite.change_x = 0
+    elif self.player_sprite.center_x > SCREEN_WIDTH - self.player_sprite.width/2:
+        self.player_sprite.center_x = SCREEN_WIDTH - self.player_sprite.width/2
+        self.player_sprite.change_x = 0
+
     self.player_list.update()
 
     if self.level_transition_pause:
