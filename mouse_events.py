@@ -19,6 +19,24 @@ def handle_mouse_press(self, x, y, button, modifiers):
             if self.obstacle_list is None:
                 self.obstacle_list = arcade.SpriteList()
             return
+        if (abs(x - self.how_to_play_button.center_x) < self.how_to_play_button.width/2 and 
+            abs(y - self.how_to_play_button.center_y) < self.how_to_play_button.height/2):
+            self.show_how_to_play = True
+            self.show_menu = False
+            if self.player_list is None:
+                self.player_list = arcade.SpriteList()
+            if self.obstacle_list is None:
+                self.obstacle_list = arcade.SpriteList()
+            return
+        if (abs(x - self.music_button.center_x) < self.music_button.width/2 and 
+            abs(y - self.music_button.center_y) < self.music_button.height/2):
+            self.music_on = not self.music_on
+            if self.music_on:
+                self.music_button.texture = arcade.load_texture("assets/music-on.png")
+            else:
+                self.music_button.texture = arcade.load_texture("assets/music-off.png")
+            self.play_background_music()
+            return
     if self.show_morpheus:
         if (abs(x - self.red_pill_button.center_x) < self.pill_button_width/2 and 
             abs(y - self.red_pill_button.center_y) < self.pill_button_height/2):

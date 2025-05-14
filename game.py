@@ -48,6 +48,12 @@ class SiberMatrix(arcade.Window):
         self.exit_button_x = SCREEN_WIDTH // 2
         self.exit_button_y = self.play_button_y - self.button_height - button_spacing - 10
 
+        self.music_on = True
+        self.music_button = arcade.Sprite("assets/music-on.png", scale=0.6)
+        self.music_button.center_x = 80
+        self.music_button.center_y = 100
+        
+        
         music_path = os.path.join(os.path.dirname(__file__), "assets", "clubbed_to_death.wav")
         self.background_music = arcade.load_sound(music_path)
         self.music_player = None
@@ -111,10 +117,16 @@ class SiberMatrix(arcade.Window):
         self.back_button_width = 200
         self.back_button_height = 50
 
+
         
     def play_background_music(self):
         if self.music_player is None:
             self.music_player = self.background_music.play(loop=True)
+        if self.music_on:
+            self.background_music.set_volume(1.0, self.music_player)
+        else:
+            self.background_music.set_volume(0.0, self.music_player)
+
 
     def setup(self):
         if self.score > 0:
@@ -210,5 +222,4 @@ class SiberMatrix(arcade.Window):
     def on_key_release(self, key, modifiers):
         handle_key_release(self, key, modifiers)
         
-    
 

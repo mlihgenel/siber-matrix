@@ -30,6 +30,7 @@ def draw_menu(self):
             arcade.draw_text(text, bx, by, arcade.color.WHITE, 35, anchor_x='center', anchor_y='center', font_name='VT323', bold=True)
     
     self.how_to_play_button.draw()
+    self.music_button.draw()
         
 def draw_game(self):
     self.obstacle_list.draw()
