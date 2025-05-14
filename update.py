@@ -8,7 +8,7 @@ def update_game(self, delta_time):
             self.current_bg_frame_index = (self.current_bg_frame_index + 1) % len(self.menu_bg_frames)
             self.bg_frame_timer = 0
         return
-    if self.show_morpheus or self.paused:
+    if self.show_morpheus or self.show_how_to_play or self.paused:
         return
 
     if self.countdown_active:
@@ -22,7 +22,6 @@ def update_game(self, delta_time):
                 self.obstacle_list.clear()
                 self.create_obstacles()
         return
-
     self.player_list.update()
 
     if self.level_transition_pause:
@@ -32,13 +31,12 @@ def update_game(self, delta_time):
             self.show_level_message = False
             self.level_message_timer = 0
         return
-
+   
     for obstacle in self.obstacle_list:
         obstacle.center_y -= self.obstacle_speed
         if obstacle.center_y < 0:
             obstacle.remove_from_sprite_lists()
             self.score += 1
-
     self.create_obstacles()
 
     next_level_score = self.calculate_next_level_score(self.level)
@@ -49,14 +47,12 @@ def update_game(self, delta_time):
         self.level_transition_pause = True
         self.level_message_timer = 0
         self.obstacle_list.clear()
-        
         if self.level <= 3:
             speed_multiplier = 0.3
         elif self.level <= 7:
             speed_multiplier = 0.5
         else:
             speed_multiplier = 0.7
-            
         self.obstacle_speed = min(OBSTACLE_SPEED + (self.level * speed_multiplier), 12)
         self.player_speed = min(PLAYER_SPEED + (self.level * 0.25), 10)
         self.obstacle_list.clear()
@@ -75,7 +71,6 @@ def update_game(self, delta_time):
             self.player_sprite.texture = self.player_textures_right[0]
         else:
             self.player_sprite.texture = self.player_textures_left[0]
-
     if arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
         if not self.morpheus_shown:
             self.show_morpheus = True

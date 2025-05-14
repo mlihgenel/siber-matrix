@@ -1,6 +1,6 @@
 import arcade
 from consts import SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_TITLE, PLAYER_SPEED, PLAYER_SPRITES_LEFT, PLAYER_SPRITES_RIGHT, ENGEL_SPRITES, OBSTACLE_SPEED
-from drawing_functions import draw_menu, draw_game , draw_morpheus , draw_countdown , draw_paused
+from drawing_functions import draw_menu, draw_game , draw_morpheus , draw_countdown , draw_paused, draw_how_to_play
 from PIL import Image
 import os
 from update import update_game, handle_key_press, handle_key_release
@@ -8,7 +8,6 @@ from mouse_events import handle_mouse_press
 from obstacle_manager import create_obstacles
 
 def load_gif_frames(gif_path):
-    """Pillow kullanarak GIF'teki frameleri Arcade Texture listesine çevirir."""
     frames = []
     im = Image.open(gif_path)
     try:
@@ -90,8 +89,8 @@ class SiberMatrix(arcade.Window):
         self.morpheus_shown = False
         self.show_morpheus = False
         self.morpheus_choice = None
-        self.countdown_active = False
-            
+        
+        self.countdown_active = False    
         self.countdown_number = 3
         self.countdown_timer = 0
         self.countdown_duration = 1.0 
@@ -105,14 +104,19 @@ class SiberMatrix(arcade.Window):
         self.pill_button_width = 170
         self.pill_button_height = 170
         
+        self.show_how_to_play = False
+        self.how_to_play_button = arcade.Sprite("assets/howtoplaybutton.png", scale=0.6)
+        self.how_to_play_button.center_x = SCREEN_WIDTH - 80
+        self.how_to_play_button.center_y = 100
+        self.back_button_width = 200
+        self.back_button_height = 50
+
+        
     def play_background_music(self):
-        """Arkaplan müziğinin sesini kontrol eder."""
         if self.music_player is None:
             self.music_player = self.background_music.play(loop=True)
 
     def setup(self):
-        """Oyunu başlatır ve gerekli değişkenleri sıfırlar."""
-        
         if self.score > 0:
             self.last_score = self.score
             if self.score > self.best_score:
@@ -130,20 +134,22 @@ class SiberMatrix(arcade.Window):
 
         self.player_textures_right = []
         self.player_textures_left = []
-
+        
         for texture_path in PLAYER_SPRITES_RIGHT:
             texture = arcade.load_texture(texture_path)
             self.player_textures_right.append(texture)
-
+        
         for texture_path in PLAYER_SPRITES_LEFT:
             texture = arcade.load_texture(texture_path)
             self.player_textures_left.append(texture)
 
         self.current_texture_index = 0
-        self.facing_right = True
-        self.facing_left = False
+        self.facing_right = True 
+
+        self.create_obstacles()
+
         self.game_over = False
-        
+        self.score = 0
         self.morpheus_shown = False
         self.show_morpheus = False
         self.morpheus_choice = None
@@ -159,13 +165,14 @@ class SiberMatrix(arcade.Window):
         return base_speed + (level - 1) * increment
     
     def on_draw(self):
-        """Ekranı çizer."""
         arcade.start_render()
         
         if self.show_menu:
             draw_menu(self)
             return 
-        
+        if self.show_how_to_play:
+            draw_how_to_play(self)
+            return
         if self.countdown_active:
             draw_countdown(self)
             return
@@ -180,6 +187,8 @@ class SiberMatrix(arcade.Window):
         if self.show_morpheus:
             draw_morpheus(self)
             return
+        
+
             
     def calculate_next_level_score(self, current_level):
         if current_level <= 3:
@@ -190,11 +199,9 @@ class SiberMatrix(arcade.Window):
             return 285 + (current_level - 7) * 60
 
     def on_update(self, time):
-        """Oyun mantığını günceller."""
         update_game(self, time)
 
     def on_mouse_press(self, x, y, button, modifiers):
-        """Fare tıklamalarını işler."""
         handle_mouse_press(self, x, y, button, modifiers)
     
     def on_key_press(self, key, modifiers):
