@@ -94,28 +94,6 @@ def handle_key_press(self, key, modifiers):
         self.close()
         return
 
-    if self.show_menu:
-        if key == arcade.key.SPACE:
-            self.show_menu = False
-            self.setup()
-            self.obstacle_speed = OBSTACLE_SPEED 
-            self.player_speed = PLAYER_SPEED     
-        return
-    
-    if self.show_morpheus:
-        if key == arcade.key.R:
-            self.show_morpheus = False
-            self.morpheus_choice = 'red'
-            self.countdown_active = True
-            for obstacle in arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
-                obstacle.remove_from_sprite_lists()
-            return
-        elif key == arcade.key.M:
-            self.show_morpheus = False
-            self.morpheus_choice = 'blue'
-            self.show_menu = True
-            return
-
     if self.game_over:
         if key == arcade.key.SPACE:
             self.show_menu = True

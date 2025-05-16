@@ -161,7 +161,7 @@ def draw_how_to_play(self):
         SCREEN_WIDTH//2,
         150,
         arcade.color.WHITE,
-        15,
+        25,
         anchor_x="center",
         anchor_y="center",
         font_name="VT323",
@@ -191,4 +191,4 @@ def draw_game_over(self):
 
     button_y = SCREEN_HEIGHT/2 - 100
     arcade.draw_text("Ana Menüye dönmek için SPACE tuşuna basın", SCREEN_WIDTH/2, button_y,
-                    (255,255,255), 20, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+                    (255,255,255), 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)

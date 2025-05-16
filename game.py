@@ -119,8 +119,6 @@ class SiberMatrix(arcade.Window):
         
         self.game_over = False
 
-
-        
     def play_background_music(self):
         if self.music_player is None:
             self.music_player = self.background_music.play(loop=True)
@@ -205,11 +203,7 @@ class SiberMatrix(arcade.Window):
             draw_morpheus(self)
             return
 
-            
-       
-        
 
-            
     def calculate_next_level_score(self, current_level):
         if current_level <= 3:
             return current_level * 35
