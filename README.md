@@ -1,8 +1,8 @@
 # Programlama Dilleri Laboratuvarı Projesi - Siber Matrix
 ---
 
-<div style="display: flex; justify-content: center; margin: 20px 0;">
-  <img src="assets/matrixfont.png" alt="Siber Matrix Logo" style="max-width: 70%; height: auto;">
+<div align="center">
+  <img src="https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/matrixfont.png" alt="Siber Matrix Logo" width="70%">
 </div>
 
 ---
@@ -39,61 +39,24 @@
 
 ## 🖼️ Oyun Görselleri
 
-<style>
-  @font-face {
-    font-family: 'VT323';
-    src: url('assets/VT323-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  .caption-text {
-    font-family: 'VT323', 'Courier New', monospace;
-    letter-spacing: 1px;
-  }
-</style>
+## 🖼️ Oyun Görselleri
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+### Ana Menü
+[![Ana Menü](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/ana_menu.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/ana_menu.png)
 
-<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,255,70,0.2); background: #0a0a0a; border: 1px solid #1a3b1a;">
-  <img src="assets/readme/ana_menu.png" alt="Ana Menü" style="width: 100%; display: block; border-bottom: 1px solid #1a3b1a;">
-  <div style="background: #0a1a0a; padding: 12px; text-align: center; color: #00ff46; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,70,0.3);">
-    ANA MENÜ
-  </div>
-</div>
+### Oyun İçi Görünüm
+[![Oyun İçi](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/oyun_ici.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/oyun_ici.png)
 
-<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,255,70,0.2); background: #0a0a0a; border: 1px solid #1a3b1a;">
-  <img src="assets/readme/oyun_ici.png" alt="Oyun İçi" style="width: 100%; display: block; border-bottom: 1px solid #1a3b1a;">
-  <div style="background: #0a1a0a; padding: 12px; text-align: center; color: #00ff46; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,70,0.3);">
-    OYUN İÇİ GÖRÜNÜM
-  </div>
-</div>
+### Morpheus Karşılaşması
+[![Morpheus](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/morpheus_ekrani.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/morpheus_ekrani.png)
 
-<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,255,70,0.2); background: #0a0a0a; border: 1px solid #1a3b1a;">
-  <img src="assets/readme/morpheus_ekrani.png" alt="Morpheus" style="width: 100%; display: block; border-bottom: 1px solid #1a3b1a;">
-  <div style="background: #0a1a0a; padding: 12px; text-align: center; color: #00ff46; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,70,0.3);">
-    MORPHEUS KARŞILAŞMASI
-  </div>
-</div>
+### Oyun Kılavuzu
+[![Nasıl Oynanır](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/nasil_oynanir.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/nasil_oynanir.png)
 
-<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,255,70,0.2); background: #0a0a0a; border: 1px solid #1a3b1a;">
-  <img src="assets/readme/nasil_oynanir.png" alt="Nasıl Oynanır" style="width: 100%; display: block; border-bottom: 1px solid #1a3b1a;">
-  <div style="background: #0a1a0a; padding: 12px; text-align: center; color: #00ff46; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,70,0.3);">
-    OYUN KILAVUZU
-  </div>
-</div>
+### Oyun Sonu Ekranı
+[![Oyun Sonu](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/game_over.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/game_over.png)
 
-<div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,255,70,0.2); background: #0a0a0a; border: 1px solid #1a3b1a;">
-  <img src="assets/readme/game_over.png" alt="Oyun Sonu" style="width: 100%; display: block; border-bottom: 1px solid #1a3b1a;">
-  <div style="background: #0a1a0a; padding: 12px; text-align: center; color: #00ff46; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,70,0.3);">
-    OYUN SONU EKRANI
-  </div>
-</div>
-
-</div>
-
-<div style="text-align: center; margin: 25px 0; font-style: italic; color: #4a8; font-size: 1em;" class="caption-text">
-  🖥️ Oyun içi görseller yüksek kalitede Matrix temalı grafikler içerir
-</div>
+*Oyun içi görseller yüksek kalitede Matrix temalı grafikler içerir*
 
 ---
 
@@ -133,8 +96,8 @@
 ### 💊 Seçim Hapı
 | Hap | Etkisi | Sonuç | Görünüm |
 |-----|--------|--------|---------|
-| 🔴 Kırmızı Hap | Mücadeleye devam etme seçeneği | Oyun içinde kalıp savaşmaya devam edersin | ![Kırmızı Hap](assets/heroes/red_pill.png) |
-| 🔵 Mavi Hap | Gerçeği görme seçeneği | Oyunu bırakıp ana menüye döner | ![Mavi Hap](assets/heroes/blue_pill.png) |
+| 🔴 Kırmızı Hap | Mücadeleye devam etme seçeneği | Oyun içinde kalıp savaşmaya devam edersin | [![Kırmızı Hap](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/red_pill.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/red_pill.png) |
+| 🔵 Mavi Hap | Gerçeği görme seçeneği | Oyunu bırakıp ana menüye döner | [![Mavi Hap](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/blue_pill.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/blue_pill.png) |
 
 
 > **Not:** Matrix'te olduğu gibi, mavi hap seni güvenli bir yere götürürken, kırmızı hap gerçekleri görmeni ve mücadeleye devam etmeni sağlar.
