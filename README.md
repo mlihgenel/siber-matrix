@@ -1,9 +1,7 @@
 # Programlama Dilleri Laboratuvarı Projesi - Siber Matrix
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/matrixfont.png" alt="Siber Matrix Logo" width="70%">
-</div>
+![Siber Matrix Logo](assets/matrixfont.png)
 
 ---
 > **Not:** Oyundaki tüm sprite'lar kendimizin olup hazır sprite'lar kullanılmamıştır.
@@ -39,24 +37,21 @@
 
 ## 🖼️ Oyun Görselleri
 
-## 🖼️ Oyun Görselleri
+| Ana Menü | Oyun İçi Görünüm |
+|:---:|:---:|
+| <img src="assets/readme/ana_menu.png" width="400"> | <img src="assets/readme/oyun_ici.png" width="400"> |
 
-### Ana Menü
-[![Ana Menü](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/ana_menu.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/ana_menu.png)
 
-### Oyun İçi Görünüm
-[![Oyun İçi](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/oyun_ici.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/oyun_ici.png)
+| Morpheus Karşılaşması | Nasıl Oynanır |
+|:---:|:---:|
+| <img src="assets/readme/morpheus_ekrani.png" width="400"> | <img src="assets/readme/nasil_oynanir.png" width="400"> |
 
-### Morpheus Karşılaşması
-[![Morpheus](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/morpheus_ekrani.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/morpheus_ekrani.png)
+| Oyun Sonu |
+|:---:|
+| <img src="assets/readme/game_over.png" width="400"> |
 
-### Oyun Kılavuzu
-[![Nasıl Oynanır](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/nasil_oynanir.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/nasil_oynanir.png)
 
-### Oyun Sonu Ekranı
-[![Oyun Sonu](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/game_over.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/readme/game_over.png)
-
-*Oyun içi görseller yüksek kalitede Matrix temalı grafikler içerir*
+> 🖥️ *Oyun içi görseller yüksek kalitede Matrix temalı grafikler içerir*
 
 ---
 
@@ -96,8 +91,8 @@
 ### 💊 Seçim Hapı
 | Hap | Etkisi | Sonuç | Görünüm |
 |-----|--------|--------|---------|
-| 🔴 Kırmızı Hap | Mücadeleye devam etme seçeneği | Oyun içinde kalıp savaşmaya devam edersin | [![Kırmızı Hap](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/red_pill.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/red_pill.png) |
-| 🔵 Mavi Hap | Gerçeği görme seçeneği | Oyunu bırakıp ana menüye döner | [![Mavi Hap](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/blue_pill.png)](https://raw.githubusercontent.com/mlihgenel/siber-matrix/main/assets/heroes/blue_pill.png) |
+| 🔴 Kırmızı Hap | Mücadeleye devam etme seçeneği | Oyun içinde kalıp savaşmaya devam edersin | ![Kırmızı Hap](assets/heroes/red_pill.png) |
+| 🔵 Mavi Hap | Gerçeği görme seçeneği | Oyunu bırakıp ana menüye döner | ![Mavi Hap](assets/heroes/blue_pill.png) |
 
 
 > **Not:** Matrix'te olduğu gibi, mavi hap seni güvenli bir yere götürürken, kırmızı hap gerçekleri görmeni ve mücadeleye devam etmeni sağlar.
