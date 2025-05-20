@@ -6,6 +6,13 @@
 ---
 > **Not:** Oyundaki tüm sprite'lar kendimizin olup hazır sprite'lar kullanılmamıştır.
 
+## 👥 Geliştirici Ekibi
+
+| Ad Soyad | E-posta |
+|----------|---------|
+| Ahmet Melih Genel  | [mlihgenel@gmail.com](mailto:mlihgenel@gmail.com)
+| Mehmet Mert Kırgıl | [kirgilmert@gmail.com](mailto:kirgilmert@gmail.com)
+
 ## Oyun Hakkında
 
 ***Siber Matrix***, Matrix filminden esinlenilmiş, Python ve Arcade kütüphanesi kullanılarak geliştirilmiş 2D bir kaçış oyunudur. Oyuncu, düşen engellerden kaçınarak yüksek skor yapmaya çalışır. Oyun, Matrix evreninin ikonik yeşil kod yağmuru arka planı ve temalarıyla süslenmiştir.
@@ -114,13 +121,13 @@ Terminal veya komut istemini açıp aşağıdaki komutları çalıştırın:
 
 ```bash
 # Arcade kütüphanesini yükleme
-pip install arcade==2.6.12
+pip install arcade==2.6.17
 
 # GIF hareketleri için gerekli kütüphaneler
 pip install pillow==9.5.0
 
 # Oyunun çalışması için gerekli diğer bağımlılıklar
-pip install pyglet==2.0.10
+pip install pyglet==2.0.dev23
 ```
 
 ### 3. Oyunu İndirme ve Çalıştırma
@@ -153,11 +160,4 @@ cd siber-matrix
 # Oyunu başlatma
 python3 main.py
 ```
-
-## 👥 Geliştirici Ekibi
-
-| Ad Soyad | E-posta |
-|----------|---------|
-| Ahmet Melih Genel  | [mlihgenel@gmail.com](mailto:mlihgenel@gmail.com)
-| Mehmet Mert Kırgıl | [kirgilmert@gmail.com](mailto:kirgilmert@gmail.com)
 
