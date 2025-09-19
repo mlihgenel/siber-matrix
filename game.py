@@ -79,7 +79,8 @@ class SiberMatrixGame:
 
         music_path = os.path.join(os.path.dirname(__file__), "assets", "clubbed_to_death.wav")
         try:
-            self.background_music = pygame.mixer.Sound(music_path)
+            #self.background_music = pygame.mixer.Sound(music_path)
+            pass 
         except Exception:
             self.background_music = None
         self.music_channel = None
