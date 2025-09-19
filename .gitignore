@@ -1,3 +1,17 @@
+# Ignore build artefacts and large binaries
+build/
+build/**
+*.apk
+docs/*.apk
+*.wasm
+*.data
+*.mem
+
+# Python venv
+.venv/
+
+# macOS
+.DS_Store
 __pycache__/
 *.py[cod]
 *$py.class
