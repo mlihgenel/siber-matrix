@@ -1,0 +1,4 @@
+pygame==2.6.1
+pillow==11.3.0
+pygbag==0.9.2
+
