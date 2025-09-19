@@ -161,33 +161,6 @@ cd siber-matrix
 python3 main.py
 ```
 
----
-
-## 🌐 Web'de Çalıştırma (pygbag)
-
-Bilgisayardan tarayıcıda çalıştırmak ve QR ile telefondan oynamak için:
-
-### 1) pygbag kur
-```bash
-python3 -m pip install pygbag
-```
-
-### 2) Yerelde web sunucusu başlat
-```bash
-python3 -m pygbag --listen 0.0.0.0:8000 .
-```
-
-Tarayıcıdan şu adrese gir: `http://<bilgisayar_ip>:8000/`
-
-### 3) QR ile telefona aç
-- Terminalde görünen URL'yi bir QR koda çevir (örn. https://qrcode-monkey.com/)
-- Telefonda QR'ı okut, oyunu tarayıcıda aç.
-
-### 4) GitHub Pages'e dağıtım (opsiyonel)
-```bash
-python3 -m pygbag --build .
-# build/web/ klasörünü GitHub Pages veya herhangi bir static hosting'e yükle
-```
 
 Notlar:
 - Web ortamında GIF arka plan için Pillow zorunlu değil; uygun bir fallback eklendi.
