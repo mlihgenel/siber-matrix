@@ -1,131 +1,98 @@
-import arcade
+import pygame
 from draw_ui import draw_glass_box, draw_neon_box, draw_neon_button
 from consts import SCREEN_HEIGHT, SCREEN_WIDTH
 
 def draw_menu(self):
-    arcade.start_render()
-    arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, arcade.color.BLACK)
-
-    if self.show_menu:
-        # Menü arkaplanı: Seçili frame'i kullanarak çiziyoruz
-        current_bg_texture = self.menu_bg_frames[self.current_bg_frame_index]
-        arcade.draw_texture_rectangle(
-            SCREEN_WIDTH//2,
-            SCREEN_HEIGHT//2,
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
-            current_bg_texture
-        )
-        arcade.draw_texture_rectangle(
-            SCREEN_WIDTH//2,
-            self.header_y,
-            self.header_w,
-            self.header_h,
-            self.header_texture
-        )
-        for text, bx, by in [('OYNA', self.play_button_x, self.play_button_y),
-                                ('ÇIKIŞ', self.exit_button_x, self.exit_button_y)]:
-            draw_neon_box(bx, by, self.button_width, self.button_height, border=4, color=(0,255,70), glow=50)
-        
-            arcade.draw_text(text, bx, by, arcade.color.WHITE, 35, anchor_x='center', anchor_y='center', font_name='VT323', bold=True)
-    
-    self.how_to_play_button.draw()
-    self.music_button.draw()
+    # Background frame
+    current_bg_surface = self.menu_bg_frames[self.current_bg_frame_index]
+    self.screen.blit(pygame.transform.smoothscale(current_bg_surface, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
+    # Header
+    self.screen.blit(self.header_surface, self.header_surface.get_rect(center=(SCREEN_WIDTH // 2, self.header_y)))
+    # Buttons with thin borders
+    border_color = (0, 255, 70)
+    pygame.draw.rect(self.screen, border_color, pygame.Rect(self.play_button_x - self.button_width//2, self.play_button_y - self.button_height//2, self.button_width, self.button_height), width=2)
+    pygame.draw.rect(self.screen, border_color, pygame.Rect(self.exit_button_x - self.button_width//2, self.exit_button_y - self.button_height//2, self.button_width, self.button_height), width=2)
+    title_font = pygame.font.Font(self.font_path, 35)
+    play_text = title_font.render('OYNA', True, (255, 255, 255))
+    exit_text = title_font.render('ÇIKIŞ', True, (255, 255, 255))
+    self.screen.blit(play_text, play_text.get_rect(center=(self.play_button_x, self.play_button_y)))
+    self.screen.blit(exit_text, exit_text.get_rect(center=(self.exit_button_x, self.exit_button_y)))
+    # Icons
+    self.screen.blit(self.how_to_play_surface, self.how_to_play_rect)
+    music_surface = self.music_button_surface_on if self.music_on else self.music_button_surface_off
+    self.screen.blit(music_surface, self.music_button_rect)
         
 def draw_game(self):
-    self.obstacle_list.draw()
-    self.player_list.draw()
-    
-    arcade.draw_text(f"Skor: {self.score}", 40, SCREEN_HEIGHT - 50, (0,255,70), 32, font_name="VT323")
-    arcade.draw_text(f"Level: {self.level}", 40, SCREEN_HEIGHT - 90, (0,255,70), 28, font_name="VT323")
-    
+    # Draw sprites
+    for obstacle in self.obstacle_list:
+        self.screen.blit(obstacle.image, obstacle.rect)
+    if self.player_sprite:
+        self.screen.blit(self.player_sprite.image, self.player_sprite.rect)
+    # Texts
+    score_text = self.ui_font_medium.render(f"Skor: {self.score}", True, (0, 255, 70))
+    level_text = self.ui_font_small.render(f"Level: {self.level}", True, (0, 255, 70))
     visual_speed = self.get_visual_speed(self.level)
-    arcade.draw_text(f"Speed: {visual_speed:.1f}x", SCREEN_WIDTH - 200, SCREEN_HEIGHT - 100, (0,255,70), 28, font_name="VT323")
-    
-    arcade.draw_text(f"En Yüksek: {self.best_score}", 
-                    SCREEN_WIDTH - 200, 
-                    SCREEN_HEIGHT - 50, 
-                    (0,255,70), 
-                    28,
-                    font_name="VT323")
-    
+    speed_text = self.ui_font_small.render(f"Speed: {visual_speed:.1f}x", True, (0, 255, 70))
+    best_text = self.ui_font_small.render(f"En Yüksek: {self.best_score}", True, (0, 255, 70))
+    self.screen.blit(score_text, (40, 20))
+    self.screen.blit(level_text, (40, 55))
+    self.screen.blit(speed_text, (SCREEN_WIDTH - 200, 55))
+    self.screen.blit(best_text, (SCREEN_WIDTH - 200, 20))
+    # Level message
     if self.show_level_message:
-        draw_glass_box(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 400, 100)
-        arcade.draw_text(f"LEVEL {self.level}!", 
-                        SCREEN_WIDTH//2,
-                        SCREEN_HEIGHT//2,
-                        (0,255,70),
-                        40,
-                        anchor_x="center",
-                        anchor_y="center",
-                        font_name="VT323",
-                        bold=True)
+        draw_glass_box(self.screen, SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 400, 100)
+        msg = self.ui_font_large.render(f"LEVEL {self.level}!", True, (0, 255, 70))
+        self.screen.blit(msg, msg.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2)))
+
+    # No on-screen buttons for movement; drag-to-move is handled by events
         
 def draw_morpheus(self):
     box_x, box_y = SCREEN_WIDTH//2, SCREEN_HEIGHT//2
-    matrix_bg = arcade.load_texture("assets/matrix-bg.jpg")
-    arcade.draw_texture_rectangle(box_x, box_y, SCREEN_WIDTH, SCREEN_HEIGHT, matrix_bg)
-    morpheus_width = int(SCREEN_WIDTH * 0.6)
-    morpheus_height = int(morpheus_width * 1)
-    morpheus_texture = arcade.load_texture("assets/heroes/morpheus.png")
-    arcade.draw_texture_rectangle(box_x, box_y+100, morpheus_width, morpheus_height, morpheus_texture)
-
-    arcade.draw_text("CHOOSE ONE", 
-                    box_x, 
-                    box_y + 370, 
-                    (0,255,70), 
-                    61, 
-                    anchor_x="center", 
-                    anchor_y="center", 
-                    font_name="VT323",
-                    bold=True)
-    
-    self.blue_pill_button.draw()
-    self.red_pill_button.draw()
+    bg = pygame.image.load("assets/matrix-bg.jpg").convert()
+    bg = pygame.transform.smoothscale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    self.screen.blit(bg, (0, 0))
+    morpheus_img = pygame.image.load("assets/heroes/morpheus.png").convert_alpha()
+    target_w = int(SCREEN_WIDTH * 0.6)
+    target_h = int(target_w * 1)
+    morpheus_img = pygame.transform.smoothscale(morpheus_img, (target_w, target_h))
+    self.screen.blit(morpheus_img, morpheus_img.get_rect(center=(box_x, box_y + 100)))
+    title = pygame.font.Font(self.font_path, 61).render("CHOOSE ONE", True, (0, 255, 70))
+    self.screen.blit(title, title.get_rect(center=(box_x, box_y + 370)))
+    self.screen.blit(self.blue_pill_surface, self.blue_pill_rect)
+    self.screen.blit(self.red_pill_surface, self.red_pill_rect)
 
 def draw_countdown(self):
-    arcade.draw_text("İkinci Bir Şans", 
-                           SCREEN_WIDTH//2,
-                           SCREEN_HEIGHT//2 + 100,
-                           (0,255,70),
-                           40,
-                           anchor_x="center",
-                           anchor_y="center",
-                           font_name="VT323",
-                           bold=True)
-            
-    arcade.draw_text(f"{self.countdown_number}", 
-                    SCREEN_WIDTH//2,
-                    SCREEN_HEIGHT//2,
-                    (0,255,70),
-                    100,
-                    anchor_x="center",
-                    anchor_y="center",
-                    font_name="VT323",
-                    bold=True)
+    title = self.ui_font_large.render("İkinci Bir Şans", True, (0, 255, 70))
+    self.screen.blit(title, title.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 + 100)))
+    number_font = pygame.font.Font(self.font_path, 100)
+    number = number_font.render(f"{self.countdown_number}", True, (0, 255, 70))
+    self.screen.blit(number, number.get_rect(center=(SCREEN_WIDTH//2, SCREEN_HEIGHT//2)))
     
 def draw_paused(self):
-    self.obstacle_list.draw()
-    self.player_list.draw()
-    draw_neon_box(self.pause_continue_button_x, self.pause_continue_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
-    arcade.draw_text("Devam Et", self.pause_continue_button_x, self.pause_continue_button_y, arcade.color.WHITE, 36, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
-    draw_neon_box(self.pause_menu_button_x, self.pause_menu_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
-    arcade.draw_text("Ana Menüye Dön", self.pause_menu_button_x, self.pause_menu_button_y, arcade.color.WHITE, 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+    for obstacle in self.obstacle_list:
+        self.screen.blit(obstacle.image, obstacle.rect)
+    if self.player_sprite:
+        self.screen.blit(self.player_sprite.image, self.player_sprite.rect)
+    draw_neon_box(self.screen, self.pause_continue_button_x, self.pause_continue_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
+    t1 = pygame.font.Font(self.font_path, 36).render("Devam Et", True, (255,255,255))
+    self.screen.blit(t1, t1.get_rect(center=(self.pause_continue_button_x, self.pause_continue_button_y)))
+    draw_neon_box(self.screen, self.pause_menu_button_x, self.pause_menu_button_y, self.pause_menu_button_width, self.pause_menu_button_height, border=4, color=(0,255,70), glow=30, glow_alpha=10)
+    t2 = pygame.font.Font(self.font_path, 25).render("Ana Menüye Dön", True, (255,255,255))
+    self.screen.blit(t2, t2.get_rect(center=(self.pause_menu_button_x, self.pause_menu_button_y)))
 
 def draw_how_to_play(self):
-    draw_glass_box(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 700, 700)
-            
-    arcade.draw_text("NASIL OYNANIR", 
-                    SCREEN_WIDTH//2,
-                    SCREEN_HEIGHT - 150,
-                    (0,255,70),
-                    40,
-                    anchor_x="center",
-                    anchor_y="center",
-                    font_name="VT323",
-                    bold=True)
+    # Panel without neon borders (remove green top/bottom glow)
+    panel_w, panel_h = 700, 700
+    panel = pygame.Surface((panel_w, panel_h), pygame.SRCALPHA)
+    panel.fill((30, 30, 30, 180))
+    self.screen.blit(panel, (SCREEN_WIDTH//2 - panel_w//2, SCREEN_HEIGHT//2 - panel_h//2))
 
-    instructions = [
+    # Title at top
+    title = pygame.font.Font(self.font_path, 40).render("NASIL OYNANIR", True, (0, 255, 70))
+    self.screen.blit(title, title.get_rect(center=(SCREEN_WIDTH//2, 120)))
+
+    # Canonical instructions, then reverse order as requested
+    canonical = [
         "Matrix'te hareket etmek için Sağ/Sol ok tuşlarını kullan",
         "Engellerden kaç ve hayatta kal",
         "Her engelden kaçtığında Matrix'te güçlenirsin",
@@ -133,62 +100,50 @@ def draw_how_to_play(self):
         "Eğer yakalanırsan, Morpheus seni 1 kez kurtarabilir",
         "Morpheus'un seçimi ile karşılaştığında:",
         "- Kırmızı hap: Gerçeği görmeye devam et",
-        "- Mavi hap: Matrixten çık"
+        "- Mavi hap: Matrixten çık",
     ]
-    
-    start_y = SCREEN_HEIGHT - 250
+    instructions = list(canonical)
+
+    # Center vertically within the panel area
+    line_gap = 40
+    line_font = pygame.font.Font(self.font_path, 20)
+    total_h = len(instructions) * line_gap
+    panel_top = 180
+    panel_bottom = self.back_button_y - 80
+    panel_center_y = (panel_top + panel_bottom) // 2
+    start_y = panel_center_y - total_h // 2
     for i, text in enumerate(instructions):
-        arcade.draw_text(text,
-                        SCREEN_WIDTH//2,
-                        start_y - i * 45, 
-                        (0,255,70),
-                        20, 
-                        anchor_x="center",
-                        anchor_y="center",
-                        font_name="VT323")
-    draw_neon_box(
-    SCREEN_WIDTH//2,  
-    150,              
-    self.back_button_width,
-    self.back_button_height,
-    border=4,
-    color=(0,255,70),
-    glow=50
-    )
-    
-    arcade.draw_text(
-        "ANA MENÜYE DÖN",
-        SCREEN_WIDTH//2,
-        150,
-        arcade.color.WHITE,
-        25,
-        anchor_x="center",
-        anchor_y="center",
-        font_name="VT323",
-        bold=True
-    )
+        surf = line_font.render(text, True, (0, 255, 70))
+        self.screen.blit(surf, (SCREEN_WIDTH//2 - surf.get_width()//2, start_y + i * line_gap))
+
+    # Back button at bottom with thin border only
+    border_color = (0, 255, 70)
+    pygame.draw.rect(self.screen, border_color, pygame.Rect(
+        SCREEN_WIDTH//2 - self.back_button_width//2,
+        self.back_button_y - self.back_button_height//2,
+        self.back_button_width,
+        self.back_button_height
+    ), width=2)
+    back = pygame.font.Font(self.font_path, 25).render("ANA MENÜYE DÖN", True, (255,255,255))
+    self.screen.blit(back, back.get_rect(center=(SCREEN_WIDTH//2, self.back_button_y)))
 
 def draw_game_over(self):
-    current_bg_texture = self.menu_bg_frames[self.current_bg_frame_index]
-    arcade.draw_texture_rectangle(
-        SCREEN_WIDTH//2,
-        SCREEN_HEIGHT//2,
-        SCREEN_WIDTH,
-        SCREEN_HEIGHT,
-        current_bg_texture
-    )
-
-    box_y = SCREEN_HEIGHT/2 + 200
-    arcade.draw_text("OYUN BİTTİ!", SCREEN_WIDTH/2, box_y,
-                    (0,255,70), 55, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
-
-    score_box_y = SCREEN_HEIGHT/2 + 80
-    draw_glass_box(SCREEN_WIDTH/2, score_box_y, 400, 80)
-    arcade.draw_text(f"En Yüksek Skor: {self.best_score}", SCREEN_WIDTH/2, score_box_y + 15,
-                    (0,255,70), 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
-    arcade.draw_text(f"Son Skor: {self.last_score}", SCREEN_WIDTH/2, score_box_y - 15,
-                    (0,255,70), 24, anchor_x="center", anchor_y="center", font_name="VT323")
-
-    button_y = SCREEN_HEIGHT/2 - 100
-    arcade.draw_text("Ana Menüye dönmek için SPACE tuşuna basın", SCREEN_WIDTH/2, button_y,
-                    (255,255,255), 25, anchor_x="center", anchor_y="center", font_name="VT323", bold=True)
+    bg = pygame.transform.smoothscale(self.menu_bg_frames[self.current_bg_frame_index], (SCREEN_WIDTH, SCREEN_HEIGHT))
+    self.screen.blit(bg, (0, 0))
+    box_y = SCREEN_HEIGHT/2 - 200
+    title = pygame.font.Font(self.font_path, 70).render("OYUN BİTTİ!", True, (0, 255, 70))
+    self.screen.blit(title, title.get_rect(center=(SCREEN_WIDTH//2, int(box_y))))
+    score_box_y = SCREEN_HEIGHT/2 - 80
+    # Thin bordered semi-transparent box
+    box_w, box_h = 400, 80
+    panel = pygame.Surface((box_w, box_h), pygame.SRCALPHA)
+    panel.fill((30, 30, 30, 180))
+    self.screen.blit(panel, (SCREEN_WIDTH//2 - box_w//2, int(score_box_y) - box_h//2))
+    pygame.draw.rect(self.screen, (0, 255, 70), pygame.Rect(SCREEN_WIDTH//2 - box_w//2, int(score_box_y) - box_h//2, box_w, box_h), width=2)
+    t1 = pygame.font.Font(self.font_path, 32).render(f"En Yüksek Skor: {self.best_score}", True, (0, 255, 70))
+    t2 = pygame.font.Font(self.font_path, 30).render(f"Son Skor: {self.last_score}", True, (0, 255, 70))
+    self.screen.blit(t1, t1.get_rect(center=(SCREEN_WIDTH//2, int(score_box_y) + 15)))
+    self.screen.blit(t2, t2.get_rect(center=(SCREEN_WIDTH//2, int(score_box_y) - 15)))
+    button_y = SCREEN_HEIGHT/2 + 100
+    t3 = pygame.font.Font(self.font_path, 28).render("Ana Menüye dönmek için SPACE tuşuna basın", True, (255, 255, 255))
+    self.screen.blit(t3, t3.get_rect(center=(SCREEN_WIDTH//2, int(button_y))))

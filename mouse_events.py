@@ -1,4 +1,4 @@
-import arcade
+import pygame
 from consts import SCREEN_WIDTH
 
 def handle_mouse_press(self, x, y, button, modifiers):
@@ -8,46 +8,26 @@ def handle_mouse_press(self, x, y, button, modifiers):
             self.setup()
             return
         if abs(x - self.exit_button_x) < self.button_width/2 and abs(y - self.exit_button_y) < self.button_height/2:
-            self.close()
+            pygame.event.post(pygame.event.Event(pygame.QUIT))
             return
-        if (abs(x - self.how_to_play_button.center_x) < self.how_to_play_button.width/2 and 
-            abs(y - self.how_to_play_button.center_y) < self.how_to_play_button.height/2):
+        if self.how_to_play_rect.collidepoint(x, y):
             self.show_how_to_play = True
             self.show_menu = False
-            if self.player_list is None:
-                self.player_list = arcade.SpriteList()
-            if self.obstacle_list is None:
-                self.obstacle_list = arcade.SpriteList()
             return
-        if (abs(x - self.how_to_play_button.center_x) < self.how_to_play_button.width/2 and 
-            abs(y - self.how_to_play_button.center_y) < self.how_to_play_button.height/2):
-            self.show_how_to_play = True
-            self.show_menu = False
-            if self.player_list is None:
-                self.player_list = arcade.SpriteList()
-            if self.obstacle_list is None:
-                self.obstacle_list = arcade.SpriteList()
-            return
-        if (abs(x - self.music_button.center_x) < self.music_button.width/2 and 
-            abs(y - self.music_button.center_y) < self.music_button.height/2):
+        if self.music_button_rect.collidepoint(x, y):
             self.music_on = not self.music_on
-            if self.music_on:
-                self.music_button.texture = arcade.load_texture("assets/music-on.png")
-            else:
-                self.music_button.texture = arcade.load_texture("assets/music-off.png")
             self.play_background_music()
             return
     if self.show_morpheus:
-        if (abs(x - self.red_pill_button.center_x) < self.pill_button_width/2 and 
-            abs(y - self.red_pill_button.center_y) < self.pill_button_height/2):
+        if self.red_pill_rect.collidepoint(x, y):
             self.show_morpheus = False
             self.morpheus_choice = 'red'
             self.countdown_active = True
-            for obstacle in arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
-                obstacle.remove_from_sprite_lists()
+            collided = [ob for ob in self.obstacle_list if self.player_sprite.rect.colliderect(ob.rect)]
+            for ob in collided:
+                self.obstacle_list.remove(ob)
             return
-        if (abs(x - self.blue_pill_button.center_x) < self.pill_button_width/2 and 
-            abs(y - self.blue_pill_button.center_y) < self.pill_button_height/2):
+        if self.blue_pill_rect.collidepoint(x, y):
             self.show_morpheus = False
             self.morpheus_choice = 'blue'
             self.show_menu = True
@@ -65,9 +45,13 @@ def handle_mouse_press(self, x, y, button, modifiers):
             return
     if self.show_how_to_play:
         if (abs(x - SCREEN_WIDTH//2) < self.back_button_width/2 and 
-            abs(y - 150) < self.back_button_height/2):
+            abs(y - self.back_button_y) < self.back_button_height/2):
             self.show_how_to_play = False
             self.show_menu = True
             return         
     
-    super(self.__class__, self).on_mouse_press(x, y, button, modifiers)  
+    # On Game Over screen: any tap returns to menu (mobile-friendly)
+    if self.game_over:
+        self.show_menu = True
+        return
+    # no super in pygame version

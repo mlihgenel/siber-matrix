@@ -1,5 +1,5 @@
-import arcade 
-from consts import OBSTACLE_SPEED, PLAYER_SPEED, SCREEN_WIDTH
+import pygame
+from consts import OBSTACLE_SPEED, PLAYER_SPEED, SCREEN_WIDTH, SCREEN_HEIGHT
 
 def update_game(self, delta_time):
     if self.show_menu or self.game_over:
@@ -19,18 +19,19 @@ def update_game(self, delta_time):
             if self.countdown_number <= 0:
                 self.countdown_active = False
                 self.countdown_number = 3
-                self.obstacle_list.clear()
+                self.obstacle_list.empty()
                 self.create_obstacles()
         return
 
-    if self.player_sprite.center_x < self.player_sprite.width/2:
-        self.player_sprite.center_x = self.player_sprite.width/2
-        self.player_sprite.change_x = 0
-    elif self.player_sprite.center_x > SCREEN_WIDTH - self.player_sprite.width/2:
-        self.player_sprite.center_x = SCREEN_WIDTH - self.player_sprite.width/2
-        self.player_sprite.change_x = 0
-
-    self.player_list.update()
+    if self.player_sprite:
+        self.player_sprite.rect.centerx += self.player_sprite.change_x
+        player_w = self.player_sprite.rect.width
+        if self.player_sprite.rect.centerx < player_w // 2:
+            self.player_sprite.rect.centerx = player_w // 2
+            self.player_sprite.change_x = 0
+        elif self.player_sprite.rect.centerx > SCREEN_WIDTH - player_w // 2:
+            self.player_sprite.rect.centerx = SCREEN_WIDTH - player_w // 2
+            self.player_sprite.change_x = 0
 
     if self.level_transition_pause:
         self.level_message_timer += delta_time
@@ -40,10 +41,23 @@ def update_game(self, delta_time):
             self.level_message_timer = 0
         return
    
-    for obstacle in self.obstacle_list:
-        obstacle.center_y -= self.obstacle_speed
-        if obstacle.center_y < 0:
-            obstacle.remove_from_sprite_lists()
+    # Drag-to-move: move player towards touch_target_x while active
+    if getattr(self, 'touch_drag_enabled', False) and self.player_sprite and self.touch_active and self.touch_target_x is not None:
+        if abs(self.touch_target_x - self.player_sprite.rect.centerx) <= self.player_speed:
+            self.player_sprite.rect.centerx = int(self.touch_target_x)
+            self.player_sprite.change_x = 0
+        elif self.touch_target_x < self.player_sprite.rect.centerx:
+            self.player_sprite.change_x = -self.player_speed
+            self.facing_right = False
+            self.player_sprite.image = self.player_textures_left[0]
+        elif self.touch_target_x > self.player_sprite.rect.centerx:
+            self.player_sprite.change_x = self.player_speed
+            self.facing_right = True
+            self.player_sprite.image = self.player_textures_right[0]
+    for obstacle in list(self.obstacle_list):
+        obstacle.rect.centery += self.obstacle_speed
+        if obstacle.rect.top > SCREEN_HEIGHT:
+            self.obstacle_list.remove(obstacle)
             self.score += 1
     self.create_obstacles()
 
@@ -54,7 +68,7 @@ def update_game(self, delta_time):
         self.show_level_message = True
         self.level_transition_pause = True
         self.level_message_timer = 0
-        self.obstacle_list.clear()
+        self.obstacle_list.empty()
         if self.level <= 3:
             speed_multiplier = 0.3
         elif self.level <= 7:
@@ -63,23 +77,25 @@ def update_game(self, delta_time):
             speed_multiplier = 0.7
         self.obstacle_speed = min(OBSTACLE_SPEED + (self.level * speed_multiplier), 12)
         self.player_speed = min(PLAYER_SPEED + (self.level * 0.25), 10)
-        self.obstacle_list.clear()
+        self.obstacle_list.empty()
 
     if self.player_sprite.change_x != 0:
         self.animation_counter += 1
         if self.animation_counter > 5:
             self.current_texture_index = (self.current_texture_index + 1) % 2
             if self.player_sprite.change_x > 0:
-                self.player_sprite.texture = self.player_textures_right[self.current_texture_index]
+                self.player_sprite.image = self.player_textures_right[self.current_texture_index]
             else:
-                self.player_sprite.texture = self.player_textures_left[self.current_texture_index]
+                self.player_sprite.image = self.player_textures_left[self.current_texture_index]
             self.animation_counter = 0
     else:
         if self.facing_right:
-            self.player_sprite.texture = self.player_textures_right[0]
+            self.player_sprite.image = self.player_textures_right[0]
         else:
-            self.player_sprite.texture = self.player_textures_left[0]
-    if arcade.check_for_collision_with_list(self.player_sprite, self.obstacle_list):
+            self.player_sprite.image = self.player_textures_left[0]
+    # Collision
+    collided = any(self.player_sprite.rect.colliderect(ob.rect) for ob in self.obstacle_list)
+    if collided:
         if not self.morpheus_shown:
             self.show_morpheus = True
             self.morpheus_shown = True
@@ -90,28 +106,28 @@ def update_game(self, delta_time):
             self.game_over = True
 
 def handle_key_press(self, key, modifiers):
-    if key == arcade.key.Q:
-        self.close()
+    if key == pygame.K_q:
+        pygame.event.post(pygame.event.Event(pygame.QUIT))
         return
 
     if self.game_over:
-        if key == arcade.key.SPACE:
+        if key == pygame.K_SPACE:
             self.show_menu = True
         return
 
-    if key == arcade.key.ESCAPE:
+    if key == pygame.K_ESCAPE:
         self.paused = not self.paused
         return
 
-    if key == arcade.key.LEFT:
+    if key == pygame.K_LEFT:
         self.player_sprite.change_x = -self.player_speed
         self.facing_right = False
-        self.player_sprite.texture = self.player_textures_left[0]
-    elif key == arcade.key.RIGHT:
+        self.player_sprite.image = self.player_textures_left[0]
+    elif key == pygame.K_RIGHT:
         self.player_sprite.change_x = self.player_speed
         self.facing_right = True
-        self.player_sprite.texture = self.player_textures_right[0]
+        self.player_sprite.image = self.player_textures_right[0]
 
 def handle_key_release(self, key, modifiers):
-    if key in (arcade.key.LEFT, arcade.key.RIGHT):
+    if key in (pygame.K_LEFT, pygame.K_RIGHT):
         self.player_sprite.change_x = 0
