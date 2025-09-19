@@ -5,7 +5,11 @@ from consts import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 
 def main():
     pygame.init()
-    pygame.mixer.init()
+    # In web browsers (pygbag), mixer init may fail or be blocked; guard it
+    try:
+        pygame.mixer.init()
+    except Exception:
+        pass
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption(SCREEN_TITLE)
     clock = pygame.time.Clock()
